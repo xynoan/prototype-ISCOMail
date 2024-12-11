@@ -25,7 +25,7 @@
                 </div>
                 <div class="d-flex flex-column step1">
                     <label for="studentNumber" class="fw-bold">Student Number</label>
-                    <input type="text" name="StudentNumber" id="studentNumber" placeholder="XX-XXXX" class="form-control" required/>
+                    <input type="text" name="StudentNumber" id="studentNumber" placeholder="XX-XXXX" class="form-control" pattern="^\d{2}-\d{4}$" title="Student Number must be in the format XX-XXXX" required />
                 </div>
             </div>
 
@@ -239,6 +239,19 @@
                     schoolName.disabled = true;
                     schoolName.removeAttribute('required');
                     schoolName.value = "";
+                }
+            });
+
+            const studentNumberInput = document.getElementById('studentNumber');
+
+            studentNumberInput.addEventListener('input', function () {
+                const regex = /^\d{2}-\d{4}$/; 
+                if (!regex.test(studentNumberInput.value)) {
+                    studentNumberInput.classList.add('is-invalid');
+                    studentNumberInput.setCustomValidity('Student Number must be in the format XX-XXXX.');
+                } else {
+                    studentNumberInput.classList.remove('is-invalid');
+                    studentNumberInput.setCustomValidity('');
                 }
             });
         });
