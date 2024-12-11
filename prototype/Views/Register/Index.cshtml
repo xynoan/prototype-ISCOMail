@@ -92,7 +92,6 @@
                                 <option value="BECEd">Bachelor of Early Childhood Education</option>
                                 <option value="BSA">Bachelor of Science in Accountancy</option>
                                 <option value="BSCS">Bachelor of Science in Computer Science</option>
-                                <!-- Add other options -->
                             </select>
                         </div>
 
@@ -102,7 +101,6 @@
                             <option selected>Select One</option>
                             <option value="BECEd">Bachelor of Early Childhood Education</option>
                             <option value="BSA">Bachelor of Science in Accountancy</option>
-                            <!-- Add other options -->
                         </select>
                         </div>
 
@@ -112,7 +110,6 @@
                             <option selected>Select One</option>
                             <option value="BECEd">Bachelor of Early Childhood Education</option>
                             <option value="BSA">Bachelor of Science in Accountancy</option>
-                            <!-- Add other options -->
                         </select>
                         </div>
 
@@ -185,18 +182,16 @@
                 let allFieldsValid = true;
 
                 requiredFields.forEach(field => {
-                    // Check if the field is visible, enabled, and not empty
                     if (!field.disabled && field.offsetParent !== null) {
                         if (!field.value.trim() || field.value === "Select One") {
                             allFieldsValid = false;
-                            field.classList.add('is-invalid'); // Highlight the invalid field
+                            field.classList.add('is-invalid'); 
                         } else {
-                            field.classList.remove('is-invalid'); // Remove highlight if valid
+                            field.classList.remove('is-invalid');
                         }
                     }
                 });
 
-                // Check if one of the ApplyingAs radio buttons is selected
                 const applyingAsRadios = document.querySelectorAll('input[name="ApplyingAs"]');
                 const applyingAsChecked = Array.from(applyingAsRadios).some(radio => radio.checked);
                 if (!applyingAsChecked) {
@@ -204,14 +199,12 @@
                     alert('Please select an option for "Applying As."');
                 }
 
-                // Prevent submission if validation fails
                 if (!allFieldsValid) {
                     e.preventDefault();
                     alert('Please fill out all required fields before proceeding.');
                 }
             });
 
-            // Enable/Disable dependent fields based on radio button selection
             const shsRadio = document.getElementById('shs');
             const track = document.getElementById('track');
             const strand = document.getElementById('strand');
@@ -235,7 +228,6 @@
                 });
             });
 
-            // Enable School Name input when Currently Enrolled is "Yes"
             const currentlyEnrolled = document.getElementById('currentlyEnrolled');
             const schoolName = document.getElementById('schoolName');
 
