@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\Appointment\" />
     <Folder Include="Views\NewFolder\" />
     <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>

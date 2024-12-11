@@ -2,6 +2,8 @@
     ViewData["Title"] = "- Register";
 }
 
+@model prototype.Models.Registration.StepOneModel
+
 <div class="container" id="main-container">
     <div id="content-form" class="p-5 mt-3">
         <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
@@ -14,41 +16,44 @@
         <form asp-action="PersonalInfo" method="post">
             <div class="d-flex flex-column w-auto gap-3 form-steps">
                 <div class="d-flex flex-column step1">
-                    <label for="date" class="fw-bold">Application Date</label>
-                    <input type="date" name="ApplicationDate" id="date" class="form-control" />
+                    <label asp-for="ApplicationDate" class="fw-bold">Application Date</label>
+                    <input asp-for="ApplicationDate" id="date" class="form-control" readonly />
                 </div>
                 <div class="d-flex flex-column step1">
                     <label for="lrn" class="fw-bold">LRN</label>
-                    <input type="number" name="LRN" id="lrn" class="form-control" />
+                    <input type="number" name="LRN" id="lrn" class="form-control" placeholder="XXXXXXXXXXXX" required />
                 </div>
                 <div class="d-flex flex-column step1">
                     <label for="studentNumber" class="fw-bold">Student Number</label>
-                    <input type="number" name="StudentNumber" id="studentNumber" class="form-control" disabled />
+                    <input type="text" name="StudentNumber" id="studentNumber" placeholder="XX-XXXX" class="form-control" required/>
                 </div>
             </div>
 
             <hr class="divider" />
             <p class="fw-bold">Applying as (Choose appropriate answer)</p>
 
-            <div class="mb-3">
-                <label for="shs"><input type="radio" name="ApplyingAs" id="shs" value="SHS" /> Senior High School Graduate</label>
+            <div class="mb-3 d-flex gap-3 align-items-center">
+                <label for="shs" style="height: 100%"><input type="radio" name="ApplyingAs" id="shs" value="SHS" /> Senior High School Graduate</label>
 
-                <div class="dropdown d-inline-block">
-                    <button class="btn border-black dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Track</button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Academic</a></li>
-                        <li><a class="dropdown-item" href="#">Technical-Vocational-Livelihood</a></li>
-                    </ul>
+                <div class="d-flex flex-column step1">
+                    <label asp-for="Track" class="fw-bold">Track</label>
+                    <select name="Track" id="track" class="form-select" required disabled>
+                        <option value="" selected>Select One</option>
+                        <option value="Academic">Academic</option>
+                        <option value="Technical-Vocational-Livelihood">Technical-Vocational-Livelihood</option>
+                    </select>
                 </div>
 
-                <div class="dropdown d-inline-block">
-                    <button class="btn border-black dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Strand</button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">ABM</a></li>
-                        <li><a class="dropdown-item" href="#">HUMSS</a></li>
-                        <li><a class="dropdown-item" href="#">STEM</a></li>
-                    </ul>
+                <div class="d-flex flex-column step1">
+                    <label asp-for="Strand" class="fw-bold">Strand</label>
+                    <select name="Strand" id="strand" class="form-select" required disabled>
+                        <option value="" selected>Select One</option>
+                        <option value="ABM">ABM</option>
+                        <option value="HUMSS">HUMSS</option>
+                        <option value="STEM">STEM</option>
+                    </select>
                 </div>
+
             </div>
 
             <div class="input-group gap-1 mb-3">
@@ -59,7 +64,7 @@
             
             <br />
 
-            <div class="input-group align-items-baseline mb-3">
+            @* <div class="input-group align-items-baseline mb-3">
                 Applying for Accreditation of Subjects? 
                 <div class="dropdown d-inline-block ms-1">
                     <button class="btn border-black dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Select One</button>
@@ -68,7 +73,7 @@
                         <li><a class="dropdown-item" href="#">No</a></li>
                     </ul>
                 </div>
-            </div>
+            </div> *@
 
             
             <label for="2ndDegree"><input type="radio" name="ApplyingAs" id="2ndDegree" value="SecondDegree" /> 2nd Degree Course Taker (Graduate of Bachelor’s Degree)</label>
@@ -82,7 +87,7 @@
 
                         <div class="choice-container">
                             <div class="choice">First Choice</div>
-                            <select class="form-select d-inline-block course" name="FirstChoice">
+                            <select class="form-select d-inline-block course" name="FirstChoice" required>
                                 <option selected>Select One</option>
                                 <option value="BECEd">Bachelor of Early Childhood Education</option>
                                 <option value="BSA">Bachelor of Science in Accountancy</option>
@@ -93,7 +98,7 @@
 
                         <div class="choice-container">
                         <div class="choice">Second Choice</div>
-                        <select class="form-select d-inline-block course" name="SecondChoice">
+                            <select class="form-select d-inline-block course" name="SecondChoice" required>
                             <option selected>Select One</option>
                             <option value="BECEd">Bachelor of Early Childhood Education</option>
                             <option value="BSA">Bachelor of Science in Accountancy</option>
@@ -103,7 +108,7 @@
 
                         <div class="choice-container">
                         <div class="choice">Third Choice</div>
-                        <select class="form-select d-inline-block course" name="ThirdChoice">
+                            <select class="form-select d-inline-block course" name="ThirdChoice" required>
                             <option selected>Select One</option>
                             <option value="BECEd">Bachelor of Early Childhood Education</option>
                             <option value="BSA">Bachelor of Science in Accountancy</option>
@@ -113,7 +118,7 @@
 
                         <div class="choice-container">
                         <div class="choice">Currently Enrolled?</div>
-                        <select class="mb-3 form-select d-inline-block course" name="CurrentlyEnrolled">
+                        <select class="mb-3 form-select d-inline-block course" name="CurrentlyEnrolled" id="currentlyEnrolled" required>
                             <option selected>Select One</option>
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
@@ -121,7 +126,7 @@
                         </div>
                     </div>
 
-                    <input type="text" name="SchoolName" id="schoolName" placeholder="Name Of School" class="form-control" />
+                    <input type="text" name="SchoolName" id="schoolName" placeholder="Name Of School" class="form-control" disabled/>
                 </div>
 
                 <div>
@@ -131,7 +136,7 @@
 
                         <div class="choice-container">
                             <div class="choice">First Choice</div>
-                            <select class="form-select d-inline-block course" name="FirstCampusChoice">
+                            <select class="form-select d-inline-block course" name="FirstCampusChoice" required>
                                 <option selected>Select One</option>
                                 <option value="sb">San Bartolome</option>
                                 <option value="sf">San Francisco</option>
@@ -141,7 +146,7 @@
 
                         <div class="choice-container">
                             <div class="choice">Second Choice</div>
-                            <select class="form-select d-inline-block course" name="SecondCampusChoice">
+                            <select class="form-select d-inline-block course" name="SecondCampusChoice" required>
                                 <option selected>Select One</option>
                                 <option value="sb">San Bartolome</option>
                                 <option value="sf">San Francisco</option>
@@ -151,7 +156,7 @@
 
                         <div class="choice-container">
                             <div class="choice">Third Choice</div>
-                            <select class="form-select d-inline-block course" name="ThirdCampusChoice">
+                            <select class="form-select d-inline-block course" name="ThirdCampusChoice" required>
                                 <option selected>Select One</option>
                                 <option value="sb">San Bartolome</option>
                                 <option value="sf">San Francisco</option>
@@ -168,3 +173,42 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Enable Track and Strand when SHS is selected
+            const shsRadio = document.getElementById('shs');
+            const track = document.getElementById('track');
+            const strand = document.getElementById('strand');
+            const applyingAsRadios = document.querySelectorAll('input[name="ApplyingAs"]');
+
+            applyingAsRadios.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    if (shsRadio.checked) {
+                        track.disabled = false;
+                        strand.disabled = false;
+                    } else {
+                        track.disabled = true;
+                        strand.disabled = true;
+                        track.value = "";
+                        strand.value = "";
+                    }
+                });
+            });
+
+            // Enable School Name input when Currently Enrolled is "Yes"
+            const currentlyEnrolled = document.getElementById('currentlyEnrolled');
+            const schoolName = document.getElementById('schoolName');
+
+            currentlyEnrolled.addEventListener('change', function () {
+                if (this.value === "Yes") {
+                    schoolName.disabled = false;
+                } else {
+                    schoolName.disabled = true;
+                    schoolName.value = "";
+                }
+            });
+        });
+    </script>
+}
