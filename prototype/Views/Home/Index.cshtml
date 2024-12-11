@@ -12,7 +12,7 @@
     <!-- Second Section: Greeting and Login/Registration -->
     <section class="mb-5">
         <div class="container">
-            <h2 class="fw-bold py-4 fs-2" style="color: var(--brown);">Nice to see you again, QCian!</h2>
+            <h2 class="fw-bold py-4 fs-2" style="color: var(--brown);">Nice to see you, QCian!</h2>
             <div class="d-flex gap-4 flex-wrap justify-content-center">
                 <div class="second_half">
                     <!-- Register Section -->
@@ -138,9 +138,11 @@
                         </a>
                     </p>
                     <p>
-                        <a href="@Url.Action("GradeSlip", "BeAQcian")" class="text-decoration-none underline-on-hover program-curriculum" style="color: var(--main-color);">
+                        @* 
+                            // should be available when logged in only
+                            <a href="@Url.Action("GradeSlip", "BeAQcian")" class="text-decoration-none underline-on-hover program-curriculum" style="color: var(--main-color);">
                             <i class="fa-regular fa-circle-right" style="color: var(--brown); font-size: 20px;"></i> ACCESS GRADE SLIP
-                        </a>
+                        </a> *@
                     </p>
                 </div>
             </div>
