@@ -13,7 +13,7 @@
         <h1 class="mt-3">Basic Information</h1>
         <hr class="divider" />
 
-        <form asp-action="PersonalInfo" method="post">
+        <form asp-action="PersonalInfo" method="post" id="registrationForm">
             <div class="d-flex flex-column w-auto gap-3 form-steps">
                 <div class="d-flex flex-column step1">
                     <label asp-for="ApplicationDate" class="fw-bold">Application Date</label>
@@ -37,7 +37,7 @@
 
                 <div class="d-flex flex-column step1">
                     <label asp-for="Track" class="fw-bold">Track</label>
-                    <select name="Track" id="track" class="form-select" required disabled>
+                    <select name="Track" id="track" class="form-select" disabled>
                         <option value="" selected>Select One</option>
                         <option value="Academic">Academic</option>
                         <option value="Technical-Vocational-Livelihood">Technical-Vocational-Livelihood</option>
@@ -46,7 +46,7 @@
 
                 <div class="d-flex flex-column step1">
                     <label asp-for="Strand" class="fw-bold">Strand</label>
-                    <select name="Strand" id="strand" class="form-select" required disabled>
+                    <select name="Strand" id="strand" class="form-select" disabled>
                         <option value="" selected>Select One</option>
                         <option value="ABM">ABM</option>
                         <option value="HUMSS">HUMSS</option>
@@ -168,7 +168,7 @@
             </div>
 
             <p class="text-end mt-3 mb-0">
-                <button class="btn next text-white" type="submit">Next <i class="fa-solid fa-chevron-right"></i></button>
+                <button id="nextButton" class="btn next text-white" type="submit">Next <i class="fa-solid fa-chevron-right"></i></button>
             </p>
         </form>
     </div>
@@ -177,7 +177,41 @@
 @section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Enable Track and Strand when SHS is selected
+            const form = document.getElementById('registrationForm');
+            const nextButton = document.getElementById('nextButton');
+
+            form.addEventListener('submit', function (e) {
+                const requiredFields = form.querySelectorAll('[required]');
+                let allFieldsValid = true;
+
+                requiredFields.forEach(field => {
+                    // Check if the field is visible, enabled, and not empty
+                    if (!field.disabled && field.offsetParent !== null) {
+                        if (!field.value.trim() || field.value === "Select One") {
+                            allFieldsValid = false;
+                            field.classList.add('is-invalid'); // Highlight the invalid field
+                        } else {
+                            field.classList.remove('is-invalid'); // Remove highlight if valid
+                        }
+                    }
+                });
+
+                // Check if one of the ApplyingAs radio buttons is selected
+                const applyingAsRadios = document.querySelectorAll('input[name="ApplyingAs"]');
+                const applyingAsChecked = Array.from(applyingAsRadios).some(radio => radio.checked);
+                if (!applyingAsChecked) {
+                    allFieldsValid = false;
+                    alert('Please select an option for "Applying As."');
+                }
+
+                // Prevent submission if validation fails
+                if (!allFieldsValid) {
+                    e.preventDefault();
+                    alert('Please fill out all required fields before proceeding.');
+                }
+            });
+
+            // Enable/Disable dependent fields based on radio button selection
             const shsRadio = document.getElementById('shs');
             const track = document.getElementById('track');
             const strand = document.getElementById('strand');
@@ -188,9 +222,13 @@
                     if (shsRadio.checked) {
                         track.disabled = false;
                         strand.disabled = false;
+                        track.setAttribute('required', 'true');
+                        strand.setAttribute('required', 'true');
                     } else {
                         track.disabled = true;
                         strand.disabled = true;
+                        track.removeAttribute('required');
+                        strand.removeAttribute('required');
                         track.value = "";
                         strand.value = "";
                     }
@@ -204,8 +242,10 @@
             currentlyEnrolled.addEventListener('change', function () {
                 if (this.value === "Yes") {
                     schoolName.disabled = false;
+                    schoolName.setAttribute('required', 'true');
                 } else {
                     schoolName.disabled = true;
+                    schoolName.removeAttribute('required');
                     schoolName.value = "";
                 }
             });
